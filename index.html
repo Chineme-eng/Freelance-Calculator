@@ -111,11 +111,11 @@
 
     .nav-link:hover { color: var(--accent); }
 
-    .theme-btn {
+    .theme-btn, .mini-btn, .copy-btn {
       font-family: var(--mono);
       font-size: 11px;
-      padding: 4px 10px;
-      border-radius: 20px;
+      padding: 6px 10px;
+      border-radius: 8px;
       border: 1px solid var(--border2);
       background: transparent;
       color: var(--muted);
@@ -123,10 +123,21 @@
       transition: all .15s;
     }
 
-    .theme-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .theme-btn:hover,
+    .mini-btn:hover,
+    .copy-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .copy-btn.copied {
+      background: var(--green-bg);
+      color: var(--green);
+      border-color: var(--green);
+    }
 
     .wrap {
-      max-width: 1100px;
+      max-width: 1180px;
       margin: 0 auto;
       padding: 3rem 2rem 6rem;
     }
@@ -247,13 +258,13 @@
 
     .main-grid {
       display: grid;
-      grid-template-columns: 1fr 390px;
+      grid-template-columns: minmax(0, 1fr) 430px;
       gap: 20px;
       align-items: start;
       margin-bottom: 3rem;
     }
 
-    @media(max-width:900px){
+    @media(max-width:960px){
       .main-grid { grid-template-columns: 1fr; }
     }
 
@@ -271,9 +282,11 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 12px;
       margin-bottom: 16px;
       padding-bottom: 12px;
       border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
     }
 
     .panel-label {
@@ -358,7 +371,8 @@
     }
 
     .input,
-    .select {
+    .select,
+    .textarea {
       width: 100%;
       background: var(--bg2);
       border: 1px solid var(--border);
@@ -372,8 +386,15 @@
     }
 
     .input:focus,
-    .select:focus {
+    .select:focus,
+    .textarea:focus {
       border-color: var(--accent);
+    }
+
+    .textarea {
+      min-height: 160px;
+      resize: vertical;
+      line-height: 1.6;
     }
 
     .mono { font-family: var(--mono); }
@@ -406,7 +427,17 @@
       width: 100%;
     }
 
-    .results { display: flex; flex-direction: column; gap: 14px; }
+    .results {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      position: sticky;
+      top: 72px;
+    }
+
+    @media(max-width:960px){
+      .results { position: static; }
+    }
 
     .big-price {
       background: var(--surface);
@@ -489,7 +520,8 @@
     }
 
     .warning-box,
-    .info-box {
+    .info-box,
+    .soft-box {
       border-radius: var(--r);
       padding: 14px 16px;
       font-family: var(--mono);
@@ -510,43 +542,39 @@
       color: var(--green);
     }
 
-    .package-grid {
+    .soft-box {
+      background: var(--accent-bg);
+      border-color: var(--accent);
+      color: var(--accent2);
+    }
+
+    .mini-grid {
       display: grid;
-      grid-template-columns: 1fr;
+      grid-template-columns: 1fr 1fr;
       gap: 10px;
     }
 
-    .package-card {
+    .mini-card {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: var(--r);
-      padding: 16px;
+      padding: 14px 16px;
       box-shadow: var(--shadow);
     }
 
-    .package-top {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 8px;
+    .mini-k {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 4px;
     }
 
-    .package-name {
-      font-family: var(--serif);
-      font-size: 18px;
-    }
-
-    .package-price {
+    .mini-v {
       font-family: var(--mono);
       font-size: 18px;
-      color: var(--accent);
-    }
-
-    .package-desc {
-      font-size: 13px;
-      color: var(--muted);
-      line-height: 1.6;
+      color: var(--text);
     }
 
     .table-card {
@@ -567,6 +595,7 @@
       padding: 14px 18px;
       border-bottom: 1px solid var(--border);
       text-align: left;
+      vertical-align: top;
     }
 
     .pricing-table tr:last-child td {
@@ -584,6 +613,59 @@
 
     .pricing-table td {
       font-size: 14px;
+    }
+
+    .package-grid,
+    .scenario-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .package-card,
+    .scenario-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 16px;
+      box-shadow: var(--shadow);
+    }
+
+    .package-top,
+    .scenario-top {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+    }
+
+    .package-name,
+    .scenario-name {
+      font-family: var(--serif);
+      font-size: 18px;
+    }
+
+    .package-price,
+    .scenario-price {
+      font-family: var(--mono);
+      font-size: 18px;
+      color: var(--accent);
+    }
+
+    .package-desc,
+    .scenario-desc {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.6;
+      margin-bottom: 10px;
+    }
+
+    .package-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
     }
 
     .divider {
@@ -644,6 +726,14 @@
     .green { color: var(--green); }
     .amber { color: var(--amber); }
     .red { color: var(--red); }
+
+    .small-note {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--muted);
+      margin-top: 8px;
+      line-height: 1.7;
+    }
   </style>
 </head>
 <body>
@@ -652,7 +742,7 @@
     <div class="nav-right">
       <a class="nav-link" href="#calculator">Calculator</a>
       <a class="nav-link" href="#packages">Packages</a>
-      <a class="nav-link" href="#tips">Tips</a>
+      <a class="nav-link" href="#proposal">Proposal</a>
       <button class="theme-btn" onclick="toggleTheme()" id="themeBtn">Dark mode</button>
     </div>
   </nav>
@@ -663,7 +753,7 @@
       <h1>The Freelance<br><em>Pricing</em> Calculator</h1>
       <p class="hero-sub">
         Stop guessing what to charge. Pick your freelance service, enter your goals,
-        and get clear hourly, project, and package pricing that actually makes sense.
+        and get clear hourly, project, package, and retainer pricing that actually makes sense.
       </p>
       <div class="hero-bar">
         <span class="hero-bar-label">Monthly income goal</span>
@@ -750,12 +840,23 @@
                 <label for="hoursPerProject">Hours per project</label>
                 <input id="hoursPerProject" class="input mono" type="number" min="1" value="10" oninput="update()">
               </div>
+
+              <div class="field">
+                <label for="monthlyClients">Target projects per month</label>
+                <input id="monthlyClients" class="input mono" type="number" min="1" value="4" oninput="update()">
+              </div>
+
+              <div class="field">
+                <label for="revisionRisk">Revision / hassle buffer %</label>
+                <input id="revisionRisk" class="input mono" type="number" min="0" max="100" value="10" oninput="update()">
+              </div>
             </div>
           </div>
 
           <div class="panel">
             <div class="panel-hdr">
               <span class="panel-label">Pricing breakdown</span>
+              <button class="mini-btn" onclick="resetDefaults()">Reset</button>
             </div>
             <div class="table-card" style="box-shadow:none;border:none;background:transparent;">
               <table class="pricing-table">
@@ -769,6 +870,13 @@
               </table>
             </div>
           </div>
+
+          <div class="panel">
+            <div class="panel-hdr">
+              <span class="panel-label">Income scenarios</span>
+            </div>
+            <div class="scenario-grid" id="scenarioGrid"></div>
+          </div>
         </div>
 
         <div class="results">
@@ -781,8 +889,28 @@
           <div class="stat-grid" id="statGrid"></div>
 
           <div id="underchargeBox"></div>
-
           <div id="positionBox"></div>
+
+          <div class="panel">
+            <div class="panel-hdr">
+              <span class="panel-label">Monthly capacity</span>
+            </div>
+            <div class="mini-grid" id="capacityGrid"></div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-hdr">
+              <span class="panel-label">Retainer suggestion</span>
+            </div>
+            <div class="soft-box" id="retainerBox"></div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-hdr">
+              <span class="panel-label">Price confidence meter</span>
+            </div>
+            <div id="confidenceBox"></div>
+          </div>
         </div>
       </div>
     </section>
@@ -796,6 +924,26 @@
       </div>
 
       <div class="package-grid" id="packageGrid"></div>
+    </section>
+
+    <div class="divider"></div>
+
+    <section id="proposal">
+      <div class="section-head">
+        <span class="section-title">Proposal text generator</span>
+        <span class="section-sub">copy and send</span>
+      </div>
+
+      <div class="panel">
+        <div class="panel-hdr">
+          <span class="panel-label">Ready-to-use pricing text</span>
+          <button class="mini-btn" onclick="copyProposal()">Copy proposal text</button>
+        </div>
+        <textarea id="proposalText" class="textarea" readonly></textarea>
+        <div class="small-note">
+          This updates automatically based on your selected service and pricing.
+        </div>
+      </div>
     </section>
 
     <div class="divider"></div>
@@ -939,6 +1087,7 @@
     ];
 
     let activeService = SERVICES[0];
+    let currentPricing = {};
 
     function renderServices(){
       const grid = document.getElementById('serviceGrid');
@@ -981,6 +1130,67 @@
       update();
     }
 
+    function resetDefaults(){
+      document.getElementById('incomeGoal').value = '6,000';
+      document.getElementById('incomeGoalTop').value = '6,000';
+      document.getElementById('monthlyExpenses').value = '300';
+      document.getElementById('billableHours').value = '20';
+      document.getElementById('weeksPerMonth').value = '4';
+      document.getElementById('experience').value = '1';
+      document.getElementById('clientType').value = '1';
+      document.getElementById('taxBuffer').value = '25';
+      document.getElementById('hoursPerProject').value = '10';
+      document.getElementById('monthlyClients').value = '4';
+      document.getElementById('revisionRisk').value = '10';
+      activeService = SERVICES[0];
+      renderServices();
+      update();
+    }
+
+    function copyText(text){
+      navigator.clipboard.writeText(text);
+    }
+
+    function copyProposal(){
+      const text = document.getElementById('proposalText').value;
+      copyText(text);
+    }
+
+    function flashCopyButton(button){
+      const original = button.textContent;
+      button.textContent = 'Copied';
+      button.classList.add('copied');
+      setTimeout(() => {
+        button.textContent = original;
+        button.classList.remove('copied');
+      }, 1200);
+    }
+
+    function createPackageCard(name, price, desc){
+      return `
+        <div class="package-card">
+          <div class="package-top">
+            <div class="package-name">${name}</div>
+            <div class="package-price">${fmtMoney(price)}</div>
+          </div>
+          <div class="package-desc">${desc}</div>
+          <div class="package-actions">
+            <button class="copy-btn" onclick="copyPackagePrice('${name}', ${Math.round(price)}, this)">Copy price</button>
+            <button class="copy-btn" onclick="copyPackageLine('${name}', ${Math.round(price)})">Copy line</button>
+          </div>
+        </div>
+      `;
+    }
+
+    function copyPackagePrice(name, price, btn){
+      copyText(`${fmtMoney(price)}`);
+      flashCopyButton(btn);
+    }
+
+    function copyPackageLine(name, price){
+      copyText(`${name} — ${fmtMoney(price)}`);
+    }
+
     function update(){
       const incomeGoal = parseMoney(document.getElementById('incomeGoal').value);
       const monthlyExpenses = parseMoney(document.getElementById('monthlyExpenses').value);
@@ -990,15 +1200,18 @@
       const clientType = +document.getElementById('clientType').value || 1;
       const taxBuffer = (+document.getElementById('taxBuffer').value || 0) / 100;
       const hoursPerProject = +document.getElementById('hoursPerProject').value || 1;
+      const monthlyClients = +document.getElementById('monthlyClients').value || 1;
+      const revisionRisk = (+document.getElementById('revisionRisk').value || 0) / 100;
 
       const monthlyHours = billableHours * weeksPerMonth;
       const baseNeed = incomeGoal + monthlyExpenses;
       const protectedRevenue = baseNeed / Math.max(0.1, 1 - taxBuffer);
       const positionedRevenue = protectedRevenue * experience * clientType * activeService.multiplier;
+      const revisionProtectedRevenue = positionedRevenue * (1 + revisionRisk);
 
       const minimumHourly = baseNeed / Math.max(1, monthlyHours);
       const sustainableHourly = protectedRevenue / Math.max(1, monthlyHours);
-      const recommendedHourly = positionedRevenue / Math.max(1, monthlyHours);
+      const recommendedHourly = revisionProtectedRevenue / Math.max(1, monthlyHours);
 
       const minimumProject = minimumHourly * hoursPerProject;
       const recommendedProject = recommendedHourly * hoursPerProject;
@@ -1008,9 +1221,48 @@
       const standardPackage = recommendedProject * 1.00;
       const premiumPackage = premiumProject * 1.35;
 
+      const maxProjectsByTime = Math.max(1, Math.floor(monthlyHours / Math.max(1, hoursPerProject)));
+      const monthlyRevenueAtRecommended = recommendedProject * monthlyClients;
+      const monthlyRevenueAtCapacity = recommendedProject * maxProjectsByTime;
+      const retainerEquivalent = recommendedProject * 0.9;
+      const dayRate = recommendedHourly * 6;
+
       const underchargePercent = recommendedHourly > 0
         ? ((recommendedHourly - minimumHourly) / recommendedHourly) * 100
         : 0;
+
+      const confidenceScoreRaw =
+        (experience * 25) +
+        (clientType * 20) +
+        (activeService.multiplier * 20) +
+        ((revisionRisk * 100) * 0.6) +
+        ((taxBuffer * 100) * 0.4);
+
+      const confidenceScore = Math.min(100, Math.max(10, Math.round(confidenceScoreRaw)));
+
+      currentPricing = {
+        incomeGoal,
+        monthlyExpenses,
+        monthlyHours,
+        baseNeed,
+        protectedRevenue,
+        revisionProtectedRevenue,
+        minimumHourly,
+        sustainableHourly,
+        recommendedHourly,
+        minimumProject,
+        recommendedProject,
+        premiumProject,
+        starterPackage,
+        standardPackage,
+        premiumPackage,
+        monthlyClients,
+        monthlyRevenueAtRecommended,
+        monthlyRevenueAtCapacity,
+        maxProjectsByTime,
+        retainerEquivalent,
+        dayRate
+      };
 
       document.getElementById('headlinePrice').textContent = fmtMoney(recommendedProject);
       document.getElementById('headlineSub').innerHTML = `
@@ -1035,8 +1287,8 @@
         },
         {
           l:'Protected monthly target',
-          v:fmtMoney(positionedRevenue),
-          s:'goal + costs + buffer',
+          v:fmtMoney(revisionProtectedRevenue),
+          s:'goal + costs + buffers',
           c:'var(--green)'
         },
         {
@@ -1059,12 +1311,14 @@
         ['Monthly business expenses', fmtMoney(monthlyExpenses)],
         ['Base monthly need', fmtMoney(baseNeed)],
         ['Tax + safety buffer', fmtPct(taxBuffer * 100)],
+        ['Revision / hassle buffer', fmtPct(revisionRisk * 100)],
         ['Working hours per month', monthlyHours + ' hrs'],
         ['Minimum hourly floor', fmtMoney(minimumHourly)],
         ['Sustainable hourly', fmtMoney(sustainableHourly)],
         ['Recommended hourly', fmtMoney(recommendedHourly)],
         ['Project hours used', hoursPerProject + ' hrs'],
-        ['Recommended project price', fmtMoney(recommendedProject)]
+        ['Recommended project price', fmtMoney(recommendedProject)],
+        ['Suggested day rate', fmtMoney(dayRate)]
       ].map(row => `
         <tr>
           <td>${row[0]}</td>
@@ -1072,31 +1326,37 @@
         </tr>
       `).join('');
 
-      document.getElementById('packageGrid').innerHTML = `
-        <div class="package-card">
-          <div class="package-top">
-            <div class="package-name">Starter</div>
-            <div class="package-price">${fmtMoney(starterPackage)}</div>
-          </div>
-          <div class="package-desc">${activeService.starter}</div>
-        </div>
+      document.getElementById('packageGrid').innerHTML = [
+        createPackageCard('Starter', starterPackage, activeService.starter),
+        createPackageCard('Standard', standardPackage, activeService.standard),
+        createPackageCard('Premium', premiumPackage, activeService.premium)
+      ].join('');
 
-        <div class="package-card">
-          <div class="package-top">
-            <div class="package-name">Standard</div>
-            <div class="package-price">${fmtMoney(standardPackage)}</div>
+      document.getElementById('scenarioGrid').innerHTML = [
+        {
+          name: 'At your target project count',
+          price: monthlyRevenueAtRecommended,
+          desc: `${monthlyClients} projects per month at your recommended price`
+        },
+        {
+          name: 'At full time capacity',
+          price: monthlyRevenueAtCapacity,
+          desc: `${maxProjectsByTime} projects per month based on your current hours`
+        },
+        {
+          name: 'Monthly goal checkpoint',
+          price: incomeGoal,
+          desc: `Your original monthly income goal before buffers`
+        }
+      ].map(s => `
+        <div class="scenario-card">
+          <div class="scenario-top">
+            <div class="scenario-name">${s.name}</div>
+            <div class="scenario-price">${fmtMoney(s.price)}</div>
           </div>
-          <div class="package-desc">${activeService.standard}</div>
+          <div class="scenario-desc">${s.desc}</div>
         </div>
-
-        <div class="package-card">
-          <div class="package-top">
-            <div class="package-name">Premium</div>
-            <div class="package-price">${fmtMoney(premiumPackage)}</div>
-          </div>
-          <div class="package-desc">${activeService.premium}</div>
-        </div>
-      `;
+      `).join('');
 
       let underchargeHTML = '';
       if (underchargePercent >= 25) {
@@ -1139,6 +1399,74 @@
         `;
       }
       document.getElementById('positionBox').innerHTML = positionHTML;
+
+      document.getElementById('capacityGrid').innerHTML = `
+        <div class="mini-card">
+          <div class="mini-k">Projects / month</div>
+          <div class="mini-v">${maxProjectsByTime}</div>
+        </div>
+        <div class="mini-card">
+          <div class="mini-k">Target projects</div>
+          <div class="mini-v">${monthlyClients}</div>
+        </div>
+        <div class="mini-card">
+          <div class="mini-k">Suggested day rate</div>
+          <div class="mini-v">${fmtMoney(dayRate)}</div>
+        </div>
+        <div class="mini-card">
+          <div class="mini-k">Revenue at target count</div>
+          <div class="mini-v">${fmtMoney(monthlyRevenueAtRecommended)}</div>
+        </div>
+      `;
+
+      document.getElementById('retainerBox').innerHTML = `
+        A strong monthly retainer for this setup would start around
+        <strong>${fmtMoney(retainerEquivalent)}</strong> per month for one consistent client.
+        That gives you recurring income without needing to resell the same project every single time.
+      `;
+
+      let confidenceText = '';
+      if (confidenceScore < 45) {
+        confidenceText = `
+          <div class="warning-box">
+            Confidence score: <strong>${confidenceScore}/100</strong><br>
+            Your setup still leans fragile. Your pricing may be mathematically valid, but it likely needs stronger positioning, better clients, or tighter scope.
+          </div>
+        `;
+      } else if (confidenceScore < 75) {
+        confidenceText = `
+          <div class="soft-box">
+            Confidence score: <strong>${confidenceScore}/100</strong><br>
+            This is a reasonable freelance offer. You are in a healthy middle zone where better branding and better client selection can lift your rates further.
+          </div>
+        `;
+      } else {
+        confidenceText = `
+          <div class="info-box">
+            Confidence score: <strong>${confidenceScore}/100</strong><br>
+            Your pricing looks strong and well-protected. This is the kind of setup that can support premium positioning if your work and communication match it.
+          </div>
+        `;
+      }
+      document.getElementById('confidenceBox').innerHTML = confidenceText;
+
+      document.getElementById('proposalText').value =
+`Hi — based on the scope we discussed for ${activeService.name.toLowerCase()}, my recommended pricing would be:
+
+Starter: ${fmtMoney(starterPackage)}
+Standard: ${fmtMoney(standardPackage)}
+Premium: ${fmtMoney(premiumPackage)}
+
+For this project, my standard recommendation would be ${fmtMoney(standardPackage)}.
+
+That price reflects the estimated time involved, the creative/technical work required, revisions, and the overall quality of delivery.
+
+If you'd like, I can also offer this as:
+• a one-time project at ${fmtMoney(recommendedProject)}
+• a day rate at ${fmtMoney(dayRate)}
+• or an ongoing monthly retainer starting at ${fmtMoney(retainerEquivalent)}
+
+Let me know which option fits best and I can tailor the scope for you.`;
     }
 
     renderServices();
