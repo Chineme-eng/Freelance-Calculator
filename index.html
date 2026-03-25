@@ -916,7 +916,7 @@
 
     .teaser-price {
       font-family: var(--serif);
-      font-size: 28px;
+      font-size: 24px;
       color: var(--accent);
       line-height: 1;
     }
@@ -1139,7 +1139,19 @@
       }
       .divider { margin: 1.5rem 0; }
     }
-  </style>
+  
+.blur-text {
+  filter: blur(6px);
+  opacity: 0.6;
+}
+
+.teaser-mini-v.blur-text,
+.teaser-price.blur-text {
+  font-size: 16px !important;
+  letter-spacing: 1px;
+}
+
+</style>
 
   <script async src="https://js.stripe.com/v3/buy-button.js"></script>
 </head>
