@@ -816,30 +816,72 @@
     }
 
 
-    .pro-cta {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      padding: 12px 18px;
-      border-radius: 999px;
-      background: var(--accent);
-      color: #fff;
-      text-decoration: none;
-      font-family: var(--mono);
-      font-size: 12px;
-      letter-spacing: .06em;
-      text-transform: uppercase;
-      border: 1px solid var(--accent);
-      transition: transform .15s, box-shadow .15s, background .15s;
-      box-shadow: var(--shadow2);
-    }
+   .pro-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 13px 22px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  color: #fff;
+  text-decoration: none;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  border: 1px solid rgba(255,255,255,0.12);
+  box-shadow:
+    0 10px 24px rgba(184, 92, 42, 0.22),
+    0 2px 8px rgba(26, 22, 18, 0.10),
+    inset 0 1px 0 rgba(255,255,255,0.22);
+  transition:
+    transform .18s ease,
+    box-shadow .18s ease,
+    filter .18s ease,
+    background .18s ease;
+  position: relative;
+  overflow: hidden;
+}
 
-    .pro-cta:hover {
-      transform: translateY(-1px);
-      background: var(--accent2);
-    }
+.pro-cta::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 70%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255,255,255,0.28),
+    transparent
+  );
+  transform: skewX(-22deg);
+  transition: left .6s ease;
+}
 
+.pro-cta:hover {
+  transform: translateY(-2px) scale(1.01);
+  box-shadow:
+    0 14px 30px rgba(184, 92, 42, 0.28),
+    0 4px 14px rgba(26, 22, 18, 0.14),
+    inset 0 1px 0 rgba(255,255,255,0.28);
+  filter: saturate(1.05);
+}
+
+.pro-cta:hover::before {
+  left: 140%;
+}
+
+.pro-cta:active {
+  transform: translateY(0) scale(0.995);
+}
+
+.pro-cta:focus-visible {
+  outline: 2px solid rgba(184, 92, 42, 0.35);
+  outline-offset: 3px;
+}
     .pro-cta.ghost {
       background: transparent;
       color: var(--accent);
@@ -1536,7 +1578,7 @@
         <div class="pro-banner-cta">
           <div class="hero-pro-note" style="margin-top:0;">One-time purchase · Instant access</div>
           <a href="https://buy.stripe.com/00w7sE3WBff25wF6lUaR201" target="_blank" class="pro-cta">
-          Unlock Pro — Pay Once ($15)
+          Unlock Pro · Pay Once ($15)
          </a>
         </div>
       </div>
